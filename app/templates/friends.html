@@ -1,0 +1,208 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Your Friends</title>
+        <style>
+            .container {
+                display: flex;
+                justify-content: space-between;
+            }
+            .column {
+                flex: 1;
+            }
+            .table {
+                border-radius: 0px;
+                cursor:pointer;
+                background-color:white;
+            }
+            .round_button {
+                border-radius: 4px;
+                cursor:pointer;
+            }
+            .hidden {
+                display:none;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container" style="border:black; border-width:1px; border-bottom:solid">
+            <div class="column">
+                <form action="/home/" method="POST">{% csrf_token %}
+                    <button type="submit" id="home_click" name="home_click" style="border:none; padding:20px; background-color:white; cursor:pointer">
+                        <img src="{% static 'neighborhost_logo.png' %}" width="200" height="28"/></h2>
+                    </button>
+                </form>
+            </div>
+            <div class="column">
+                <center>
+                    <h1>Friends List</h1>
+                </center>
+            </div>
+            <div class="column">
+                <form style="padding:20px" align="right">
+                    <select>
+                        <option value="Planner">Planner</option>
+                        <option value="Chat">Chat</option>
+                        <option value="Friends' Events">Friends' Events</option>
+                        <option value="Friend Requests">Friend Requests</option>
+                    </select>
+                    <button type="submit" class="round_button">Change view</button>
+                </form>
+            </div>
+        </div>
+        <div class="container">
+            <div class="column">
+                <center>
+                    <br>
+                    <label style="font-size:xx-large; font-weight:bold">Friend</label>
+                    <br>
+                    <br>
+                    {% for friend_id, friend_name in friends.items %}
+                    <form>
+                        <button type="submit" style="width:100%" class="table">{{ friend_name }}</button>
+                    </form>
+                    {% endfor %}
+                </center>
+            </div>
+            <div class="column">
+                <center>
+                    <br>
+                    <label style="font-size:xx-large; font-weight:bold">Frequency</label>
+                    <br>
+                    <br>
+                    {% for friend_id, friend_name in friends.items %}
+                    <input id="default_frequency_{{ friend_id }}" type="button" style="width:100%" class="table" value="Date and Time and Frequency">
+                    <form id="change_frequency_{{ friend_id }}" class="hidden">
+                        <input type="date"><input type="time">
+                        <select>
+                            <option>One time</option>
+                            <option>Weekly</option>
+                            <option>Bi-weekly</option>
+                            <option>Monthly</option>
+                            <option>Seasonally</option>
+                            <option>Bi-annually</option>
+                            <option>Yearly</option>
+                        </select>
+                        <button type="submit" class="round_button" value="friend_id">Update</button>
+                        <input id="cancel_frequency_{{ friend_id }}" type="button" class="round_button" value="Cancel">
+                    </form>
+                    {% endfor %}
+                </center>
+            </div>
+            <div class="column">
+                <center>
+                    <br>
+                    <label id="custom_column_label" style="font-size:xx-large; font-weight:bold">Custom</label>
+                    <input id="customize_column" type="button" class="round_button" value="Customize">
+                    <form id="neighbor_column" class="hidden">
+                        <input type="text" placeholder="e.g., location, affiliation, etc.">
+                        <input type="submit" value="Update" class="round_button">
+                        <input id="cancel_customize" type="button" value="Cancel" class="round_button">
+                    </form>
+                    <br>
+                    <br>
+                    {% for friend_id, friend_name in friends.items %}
+                    <input id="edit_custom_{{ friend_id }}" type="button" style="width:100%" class="table" value="Your custom field">
+                    <form id="update_custom_{{ friend_id }}" class="hidden">
+                        <input type="text" placeholder="e.g., my neighborhood, not my neighborhood, work, school, etc.">
+                        <input type="submit" value="Update" class="round_button">
+                        <input id="cancel_custom_{{ friend_id }}" type="button" value="Cancel" class="round_button">
+                    </form>
+                    {% endfor %}
+                </center>
+            </div>
+        </div>
+        
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                {% for friend_id, friend_name in friends.items %}
+                (function() {
+                    const defaultFrequency = document.getElementById('default_frequency_{{ friend_id }}')
+
+                    function changeFrequency() {
+                        defaultFrequency.classList.add('hidden');
+                        document.getElementById('change_frequency_{{ friend_id }}').classList.remove('hidden');
+                    }
+
+                    defaultFrequency.addEventListener('click', changeFrequency)        
+                })();
+                {% endfor %}
+            });
+        </script>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                {% for friend_id, friend_name in friends.items %}
+                (function() {
+                    function cancelFrequency() {
+                        document.getElementById('change_frequency_{{ friend_id }}').classList.add('hidden');
+                        document.getElementById('default_frequency_{{ friend_id }}').classList.remove('hidden');
+                    }
+
+                    document.getElementById('cancel_frequency_{{ friend_id }}').addEventListener('click', cancelFrequency)        
+                })();
+                {% endfor %}
+            });
+        </script>
+
+        <script>
+            const customColumnButton = document.getElementById('customize_column')
+
+            function customizeColumn() {
+                document.getElementById('custom_column_label').classList.add('hidden');
+                customColumnButton.classList.add('hidden');
+                document.getElementById('neighbor_column').classList.remove('hidden');
+            }
+
+            customColumnButton.addEventListener('click', customizeColumn)
+        </script>
+
+        <script>
+            function cancelCustomize() {
+                document.getElementById('neighbor_column').classList.add('hidden');
+                document.getElementById('custom_column_label').classList.remove('hidden');
+                document.getElementById('customize_column').classList.remove('hidden');
+            }
+
+            document.getElementById('cancel_customize').addEventListener('click', cancelCustomize)
+        </script>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                {% for friend_id, friend_name in friends.items %}
+                (function() {
+                    const editCustomButton = document.getElementById('edit_custom_{{ friend_id }}')
+
+                    function editCustom() {
+                        editCustomButton.classList.add('hidden');
+                        document.getElementById('update_custom_{{ friend_id }}').classList.remove('hidden');
+                    }
+
+                    editCustomButton.addEventListener('click', editCustom)        
+                })();
+                {% endfor %}
+            });
+        </script>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                {% for friend_id, friend_name in friends.items %}
+                (function() {
+                    function updateCustom() {
+                        document.getElementById('update_custom_{{ friend_id }}').classList.add('hidden');
+                        document.getElementById('edit_custom_{{ friend_id }}').classList.remove('hidden');
+                    }
+
+                    document.getElementById('cancel_custom_{{ friend_id }}').addEventListener('click', updateCustom)        
+                })();
+                {% endfor %}
+            });
+        </script>
+
+        <br>
+        <footer style="border:black; border-width:1px; border-top:solid"><br>&copy; 2024 neighborhost.com by dataonlock. All rights reserved.</footer> 
+    </body>
+</html>

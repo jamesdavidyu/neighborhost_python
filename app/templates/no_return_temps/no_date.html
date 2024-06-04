@@ -1,0 +1,376 @@
+<!--------------------------------------------------------------------- 5. LANDING PAGE ------------------------------------------------------------------------>
+
+<!---------------------------------------------------------------------------------------------------------------------------------------------------------------
+1. STYLE SETTING
+    1A. AUTOFITS WEBPAGE TO USERS SCREEN SIZE
+    1B. CREATES CONTAINER TO ORGANIZE WEBPAGE INTO COLUMNS
+    1C. ORGANIZES WEBPAGE INTO COLUMNS
+    1D. DESIGNATES LEFT COLUMN WITHIN CONTAINER, TAKES UP LEFT QUARTER OF PAGE
+    1E. DESIGNATES RIGHT COLUMN WITHIN CONTAINER, TAKES UP RIGHT THREE QUARTERS OF PAGE
+    1F. CREATES BORDER BETWEEN COLUMNS
+    1G. STYLES POPUP EVENT PLANNING FORM
+    1H. STYLES CLOSE BUTTON ON POPUP SIGNUP FORM
+    1I. SPLITS POPUP BOX INTO COLUMNS
+    1J. APPLIES CONTAINER
+    1K. CODE UNDER THIS SECTION FALLS UNDER LEFT COLUMN
+2. PROFILE SECTION
+    2A. WELCOME MESSAGE DISPLAYS USER'S SPECIFIC NAME ACCORDING TO LOGIN
+    2B. ?
+    2C-?. ?
+    2?. PLAN AN EVENT BUTTON OPENS POPUP BOX FOR USER TO CREATE/ENTER EVENT DETAILS
+3. PLAN AN EVENT POPUP BOX
+    3A. CONNECTS TO "X" CLOSE BUTTON
+    3B. PLAN AN EVENT FORM
+4. DASHBOARD SECTION
+---------------------------------------------------------------------------------------------------------------------------------------------------------------->
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <!------------------------- 1. STYLE SETTING ------------------------->
+
+        <!----------- 1A. AUTOFITS WEBPAGE TO USERS SCREEN SIZE ------------->
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>neighborhost.com</title>
+        <style>
+            /* 1B. CREATES CONTAINER TO ORGANIZE WEBPAGE INTO COLUMNS */
+            .container {
+                display: flex;
+            }
+            /* 1C. ORGANIZES WEBPAGE INTO COLUMNS */
+            .column {
+                padding: 20px;
+                position: relative;
+            }
+            /* 1D. DESIGNATES LEFT COLUMN WITHIN CONTAINER, TAKES UP LEFT QUARTER OF PAGE */
+            .column1 {
+                flex: 1;
+                flex-basis: 25%;
+            }
+            /* 1E. DESIGNATES RIGHT COLUMN WITHIN CONTAINER, TAKES UP RIGHT THREE QUARTERS OF PAGE */
+            .column2 {
+                flex: 3;
+                flex-basis: 75%;
+            }
+            /* 1F. CREATES BORDER BETWEEN COLUMNS */
+            .column1::after {
+                content: "";
+                position: absolute;
+                top: 0;
+                bottom: 0;
+                right: 0;
+                width: 1px;
+                background-color:black;
+            }
+            /* 1G. STYLES POPUP EVENT PLANNING FORM */
+            .popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%,-50%);
+            padding: 20px;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            }
+            /* 1H. STYLES CLOSE BUTTON ON POPUP SIGNUP FORM */
+            .close_button {
+                position: absolute;
+                top: 10px;
+                right: 10px;
+                cursor: pointer;
+            }
+            /* 1I. SPLITS POPUP BOX INTO COLUMNS */
+            .column_popup {
+                flex: 1;
+                padding: 20px;
+            }
+            .right_container {
+            display: flex;
+            justify-content: space-between;
+            }
+            .right_columns {
+                flex: 1;
+            }
+        </style>
+    </head>
+    <body>
+        <!-- 1J. APPLIES CONTAINER -->
+        <div class="container">
+            <!-- 1K. CODE UNDER THIS SECTION FALLS UNDER LEFT COLUMN -->
+            <div class="column column1">
+                <!-------------------------------------- 2. PROFILE SECTION -------------------------------------------->
+                <!-- 2A. WELCOME MESSAGE DISPLAYS USER'S SPECIFIC NAME ACCORDING TO LOGIN -->
+                <h1>Howdy, {{ name }}!</h1>
+                <!-- 2B. ? -->
+                <h2>Profile<br><br>Links to other users' pages and communities
+                </h2>
+                <!-- 2C-?. ? -->
+                <!-- 2?. PLAN AN EVENT BUTTON OPENS POPUP BOX FOR USER TO CREATE/ENTER EVENT DETAILS -->
+                <div>
+                    <button onclick="togglePopup()">Plan an event</button>
+                </div>
+
+                <br>
+
+                <form action="signout" method="post">
+                    <input type="submit" value="Sign out">
+                </form>
+            </div>
+            <!-- 3. PLAN AN EVENT POPUP BOX -->
+            <div id="signupPopup" class="popup">
+                <!-- 3A. CONNECTS TO "X" CLOSE BUTTON -->
+                <span class="close_button" onclick="togglePopup()">X</span>
+                <!-- 3B. PLAN AN EVENT FORM -->
+                <form action="/event_plan" method="post">
+                    <h1>What are you neighborhosting?</h1>
+                    
+                    <div>
+                        <label>Describe your event: what's your favorite thing to do with people?</label>
+                        <br>
+                        <input type="text" id="event_description" name="event_description" placeholder="e.g., We will be learning how to cook pho broth!">
+                    </div>
+        
+                    <br>
+                    
+                    <div>
+                        <label>Event Name</label>
+                        <br>
+                        <input type="text" id="event_name" name="event_name" placeholder="Cooking class, Concert, etc."> <!--would be cool to have a placeholder that changes every couple of seconds-->
+                    </div>
+
+                    <div class="container">
+                        <div class="column_popup">
+                            <label>Start date</label>
+                            <br>
+                            <input type="date" id="event_start_date" name="event_start_date">
+                        </div>
+                        <div class="column_popup">
+                            <label>End date</label>
+                            <br>
+                            <input type="date" id="event_end_date" name="event_end_date">
+                        </div>
+                    </div>
+
+                    <div class="container">
+                        <div class="column_popup">
+                            <div>
+                                <label>Start time</label>
+                                <br>
+                                <input type="time" id="event_start_time" name="event_start_time">
+                            </div>
+                        </div>
+                        <div class="column_popup">
+                            <label>End time</label>
+                            <br>
+                            <input type="time" id="event_end_time" name="event_end_time">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label>Does this event reoccur?</label>
+                        <br>
+                        <select id="event_reoccur" name="event_reoccur">
+                            <option value="No">No</option>
+                            <option value="Weekly">Weekly</option>
+                            <option value="Bi-weekly">Bi-weekly</option>
+                            <option value="Monthly">Monthly</option>
+                            <option value="Quarterly">Quarterly</option>
+                            <option value="Every 6 months">Every 6 months</option>
+                            <option value="Yearly">Yearly</option>
+                        </select>
+                    </div>
+
+                    <br>
+
+                    <div>
+                        <label>Address</label>
+                        <br>
+                        <input type="text" id="event_address" name="event_address" placeholder="123 Main St">
+                    </div>
+
+                    <br>
+
+                    <div>
+                        <input type="text" id="event_city" name="event_city" placeholder="City">
+                        <select id="event_state" name="event_state">
+                            <option value="State">State</option>
+                            <option value="Alabama">Alabama</option>
+                            <option value="Alaska">Alaska</option>
+                            <option value="American Samoa">American Samoa</option>
+                            <option value="Arizona">Arizona</option>
+                            <option value="Arkansas">Arkansas</option>
+                            <option value="Bureau of Indian Education">Bureau of Indian Education</option>
+                            <option value="California">California</option>
+                            <option value="Colorado">Colorado</option>
+                            <option value="Connecticut">Connecticut</option>
+                            <option value="Delaware">Delaware</option>
+                            <option value="District of Columbia">District of Columbia</option>
+                            <option value="Federated States of Micronesia">Federated States of Micronesia</option>
+                            <option value="Florida">Florida</option>
+                            <option value="Georgia">Georgia</option>
+                            <option value="Guam">Guam</option>
+                            <option value="Hawaii">Hawaii</option>
+                            <option value="Idaho">Idaho</option>
+                            <option value="Illinois">Illinois</option>
+                            <option value="Indiana">Indiana</option>
+                            <option value="Iowa">Iowa</option>
+                            <option value="Kansas">Kansas</option>
+                            <option value="Kentucky">Kentucky</option>
+                            <option value="Louisiana">Louisiana</option>
+                            <option value="Maine">Maine</option>
+                            <option value="Maryland">Maryland</option>
+                            <option value="Massachusetts">Massachusetts</option>
+                            <option value="Michigan">Michigan</option>
+                            <option value="Minnesota">Minnesota</option>
+                            <option value="Mississippi">Mississippi</option>
+                            <option value="Missouri">Missouri</option>
+                            <option value="Montana">Montana</option>
+                            <option value="Nebraska">Nebraska</option>
+                            <option value="Nevada">Nevada</option>
+                            <option value="New Hampshire">New Hampshire</option>
+                            <option value="New Jersey">New Jersey</option>
+                            <option value="New Mexico">New Mexico</option>
+                            <option value="New York">New York</option>
+                            <option value="North Carolina">North Carolina</option>
+                            <option value="North Dakota">North Dakota</option>
+                            <option value="Northern Marianas">Northern Marianas</option>
+                            <option value="Ohio">Ohio</option>
+                            <option value="Oklahoma">Oklahoma</option>
+                            <option value="Oregon">Oregon</option>
+                            <option value="Pennsylvania">Pennsylvania</option>
+                            <option value="Puerto Rico">Puerto Rico</option>
+                            <option value="Republic of Palau">Republic of Palau</option>
+                            <option value="Republic of the Marshall Islands">Republic of the Marshall Islands</option>
+                            <option value="Rhode Island">Rhode Island</option>
+                            <option value="South Carolina">South Carolina</option>
+                            <option value="South Dakota">South Dakota</option>
+                            <option value="Tennessee">Tennessee</option>
+                            <option value="Texas">Texas</option>
+                            <option value="Utah">Utah</option>
+                            <option value="Vermont">Vermont</option>
+                            <option value="Virgin Islands">Virgin Islands</option>
+                            <option value="Virginia">Virginia</option>
+                            <option value="Washington">Washington</option>
+                            <option value="West Virginia">West Virginia</option>
+                            <option value="Wisconsin">Wisconsin</option>
+                            <option value="Wyoming">Wyoming</option>
+                        </select>
+                        <input type="text" id="event_zipcode" name="event_zipcode" placeholder="Zipcode">
+                    </div>
+
+                    <br>
+
+                    <div>
+                        <label>Would you like to take this event public?</label>
+                        <br>
+                        <select id="event_public" name="event_public">
+                            <option value="Yes">Yes</option>
+                            <option value="No">No</option>
+                        </select>
+                    </div>
+
+                    <br>
+
+                    <div>
+                        <label>Invitees</label>
+                        <br>
+                        <select id="event_invitees" name="event_invitees">
+                            <option value="event_invitees">Skip</option>
+                        </select>
+                    </div>
+
+                    <br>
+
+                    <input type="submit">
+                    
+                    <br>
+                    <br>
+
+                </form>
+            </div>
+
+            <script>
+                function togglePopup() {
+                    var popup = document.getElementById('signupPopup');
+                    popup.style.display = (popup.style.display === 'none' || popup.style.display === '') ? 'block' : 'none';
+                }
+            </script>
+            <div class="column column2">
+                    <div class="right_container">
+                        <div class="right_columns">
+                            <form action="/filter_date" method="post">
+                                <select id="date_by" name="date_by">
+                                    <option value="On">On</option>
+                                    <option value="Before">Before</option>
+                                    <option value="After">After</option>
+                                </select>
+                                <input type="date" id="filter_date" name="filter_date">
+                                <input type="submit" value="Filter by date">
+                                <br>
+                                <label>You left the date field blank! Please try again.</label>
+                            </form>
+                        </div>
+                        <div class="right_columns">
+                            <form action="/filter_search" method="post">
+                                <input type="text" id="filter_search" name="filter_search" placeholder="Search for events (e.g., cooking, etc.)">
+                                <input type="submit" value="Filter by keyword(s)">
+                            </form>
+                        </div>
+                        <div class="right_columns">
+                            <form action="/filter_time" method="post">
+                                <select id="time_by" name="time_by">
+                                    <option value="At">At</option>
+                                    <option value="Before">Before</option>
+                                    <option value="After">After</option>
+                                </select>
+                                <input type="time" id="filter_time" name="filter_time">
+                                <input type="submit" value="Filter by time">
+                            </form>
+                        </div>
+                    </div>
+                <div class="right_container">
+                    <div class="right_columns">
+                        <h2 style="border:black; border-width:1px; border-left:solid; border-top:solid; border-bottom:solid"><br>{{ event_date[0] }}<br><br></h2>
+                        <h2 style="border:black; border-width:1px; border-left:solid; border-top:solid; border-bottom:solid"><br>{{ event_date[1] }}<br><br></h2>
+                        <h2 style="border:black; border-width:1px; border-left:solid; border-top:solid; border-bottom:solid"><br>{{ event_date[2] }}<br><br></h2>
+                        <h2 style="border:black; border-width:1px; border-left:solid; border-top:solid; border-bottom:solid"><br>{{ event_date[3] }}<br><br></h2>
+                        <h2 style="border:black; border-width:1px; border-left:solid; border-top:solid; border-bottom:solid"><br>{{ event_date[4] }}<br><br></h2>
+                    </div>
+                    <div class="right_columns">
+                        <h2 style="border:black; border-width:1px; border-top:solid; border-bottom:solid"><br>{{ event_name[0] }}<br><br></h2>
+                        <h2 style="border:black; border-width:1px; border-top:solid; border-bottom:solid"><br>{{ event_name[1] }}<br><br></h2>
+                        <h2 style="border:black; border-width:1px; border-top:solid; border-bottom:solid"><br>{{ event_name[2] }}<br><br></h2>
+                        <h2 style="border:black; border-width:1px; border-top:solid; border-bottom:solid"><br>{{ event_name[3] }}<br><br></h2>
+                        <h2 style="border:black; border-width:1px; border-top:solid; border-bottom:solid"><br>{{ event_name[4] }}<br><br></h2>
+                        <div class="right_container">
+                            <div class="right_container">
+                                <div class="right_columns">
+                                    <input type="submit" value="Filter All">
+                                </div>
+                                <div class="right_columns">
+                                    <form action="refresh_events" method="post">
+                                        <input type="submit" value="Refresh Events List">
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="right_columns">
+                                <input type="submit" value="Next">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="right_columns">
+                        <h2 style="border:black; border-width:1px; border-right:solid; border-top:solid; border-bottom:solid"><br>{{ event_time[0] }}<br><br></h2>
+                        <h2 style="border:black; border-width:1px; border-right:solid; border-top:solid; border-bottom:solid"><br>{{ event_time[1] }}<br><br></h2>
+                        <h2 style="border:black; border-width:1px; border-right:solid; border-top:solid; border-bottom:solid"><br>{{ event_time[2] }}<br><br></h2>
+                        <h2 style="border:black; border-width:1px; border-right:solid; border-top:solid; border-bottom:solid"><br>{{ event_time[3] }}<br><br></h2>
+                        <h2 style="border:black; border-width:1px; border-right:solid; border-top:solid; border-bottom:solid"><br>{{ event_time[4] }}<br><br></h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer>&copy; 2024 neighborhost.com by dataonlock. All rights reserved.</footer> 
+    </body>
+</html>

@@ -1,0 +1,304 @@
+<!------------------------------------------------------------------ 2. MAIN/LOGIN PAGE ---------------------------------------------------------------------->
+
+<!-------------------------------------------------------------------------------------------------------------------------------------------------------------
+1. STYLE SETTING
+    1A. AUTOFITS WEBPAGE TO USERS SCREEN SIZE
+    1B. STYLES POPUP SIGNUP FORM
+    1C. STYLES CLOSE BUTTON ON POPUP SIGNUP FORM
+    1D. CREATES CONTAINER TO ORGANIZE WEBPAGE INTO COLUMNS
+    1E. ORGANIZES WEBPAGE INTO COLUMNS
+    1F. DESIGNATES LEFT COLUMN WITHIN CONTAINER, TAKES UP LEFT QUARTER OF PAGE
+    1G. DESIGNATES RIGHT COLUMN WITHIN CONTAINER, TAKES UP RIGHT THREE QUARTERS OF PAGE
+    1H. CREATES BORDER BETWEEN COLUMNS
+    1I. APPLIES CONTAINER
+    1J. CODE UNDER THIS SECTION FALLS UNDER LEFT COLUMN
+    1K. CODE UNDER THIS SECTION FALLS UNDER RIGHT COLUMN
+    1L. JAVASCRIPT CODE TO ACTIVATE POPUP FUNCTIONALITY
+2. LOGIN SECTION
+    2A. USER ENTERS ACCOUNT EMAIL
+    2B. ADDS A SPACE IN BETWEEN EMAIL AND PASSWORD FIELDS
+    2C. USER ENTERS ACCOUNT PASSWORD
+    2D. USER CHECKS WHETHER THEY WANT TO SKIP ENTERING LOGIN INFO
+    2E. ADDS A SPACE BETWEEN PASSWORD AND SUBMIT BUTTON
+    2F. USER SUBMITS LOGIN INFO
+    2G. LINKS TO PAGE FOR USER TO RESET PASSWORD
+    2H. ADDS A SPACE BETWEEN LOGIN BUTTON AND SIGNUP BUTTON
+    2I. USER ACCOUNT SIGN UP BUTTON
+3. SIGN UP POPUP BOX
+    3A. CONNECTS TO "X" CLOSE BUTTON
+    3B. SIGN UP FORM
+    3C. USER ENTERS FIRST AND LAST NAME FOR ACCOUNT
+    3D. ADDS A SPACE BETWEEN NAME AND EMAIL
+    3E. USER ENTERS CITY AND STATE FOR ACCOUNT - also for security, only people who know BVille can access
+    3F. ADDS A SPACE BETWEEN LOCATION AND EMAIL
+    3G. USER ENTERS EMAIL FOR ACCOUNT
+    3H. ADDS A SPACE BETWEEN EMAIL AND PASSWORD
+    3I. USER ENTERS PASSWORD FOR ACCOUNT
+    3J. USER CHECKS WHETHER THEY WANT TO SKIP ENTERING LOGIN
+    3K. ADDS A SPACE BETWEEN PASSWORD AND SIGN UP INFO SUBMIT BUTTON
+    3L. SIGN UP INFO SUBMIT BUTTON
+4. DASHBOARD SECTION, FALLS UNDER RIGHT COLUMN
+    4a. revolving gallery of public events... calendar, map view...
+5. ABOUT NEIGHBORHOST SECTION
+    5a. about neighborhost (mission, vision, values, people, company, investors, franchising, etc.)
+    5b. careers... 
+---------------------------------------------------------------------------------------------------------------------------------------------------------------->
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <!------------------------------ 1. STYLE SETTING ---------------------------------->
+    
+    <!------------ 1A. AUTOFITS WEBPAGE TO USERS SCREEN SIZE ------------>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>neighborhost.com</title>
+    <style>
+        /* 1B. CREATES POPUP SIGNUP FORM */
+        .popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%,-50%);
+            padding: 20px;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+        }
+        /* 1C. CREATES CLOSE BUTTON ON POPUP SIGNUP FORM */
+        .close_button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            cursor: pointer;
+        }
+        /* 1D. CREATES CONTAINER TO ORGANIZE WEBPAGE INTO COLUMNS */
+        .container {
+            display: flex;
+        }
+        /* 1E. ORGANIZES WEBPAGE INTO COLUMNS */
+        .column {
+            padding: 20px;
+            position: relative;
+        }
+        /* 1F. DESIGNATES LEFT COLUMN WITHIN CONTAINER, TAKES UP LEFT QUARTER OF PAGE */
+        .column1 {
+            flex: 1;
+            flex-basis: 25%;
+        }
+        /* 1G. DESIGNATES RIGHT COLUMN WITHIN CONTAINER, TAKES UP RIGHT THREE QUARTERS OF PAGE */
+        .column2 {
+            flex: 3;
+            flex-basis: 75%;
+        }
+        /* 1H. CREATES BORDER BETWEEN COLUMNS */
+        .column1::after{
+            content: "";
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            right: 0;
+            width: 1px;
+            background-color:black;
+        }
+        .right_container {
+            display: flex;
+            justify-content: space-between;
+        }
+        .right_columns {
+            flex: 1;
+        }
+    </style>
+</head>
+<body>
+    <!-- 1I. APPLIES CONTAINER -->
+    <div class="container">
+        <!-- 1J. CODE UNDER THIS SECTION FALLS UNDER LEFT COLUMN -->
+        <div class="column column1">
+            <!---------------------------- 2. LOGIN SECTION ---------------------------------->
+            <h1>neighborhost.com</h1>
+            <h4>We could not find an account with this email and/or password. Please try entering your login info again.</h4>
+            <form action="/login" method="post">
+                <!---------------- 2A. USER ENTERS ACCOUNT EMAIL ----------------->
+                <div>
+                    <input type="text" id="email" name="email" placeholder="Email">
+                </div>
+                <!-- 2B. ADDS A SPACE IN BETWEEN EMAIL AND PASSWORD FIELDS -->
+                <br>
+                <!--------------------- 2C. USER ENTERS ACCOUNT PASSWORD --------------------->
+                <div>
+                    <input type="password" id="password" name="password" placeholder="Password"><!--add show password button-->
+                </div>
+                <!----- 2D. USER CHECKS WHETHER THEY WANT TO SKIP ENTERING LOGIN INFO ----->
+                <div>
+                    <label>
+                        <input type="checkbox" id="rememberme" name="rememberme">Remember me
+                    </label>
+                </div>
+                <!-- 2E. ADDS A SPACE BETWEEN PASSWORD AND SUBMIT BUTTON -->
+                <br>
+                <!---- 2F. USER SUBMITS LOGIN INFO ---->
+                <div>
+                    <input type="submit" value="Log In">
+                </div>
+            </form>
+            <!-- 2G. LINKS TO PAGE FOR USER TO RESET PASSWORD -->
+            <nav>
+                <a href="#forgot_password">Forgot password?</a>
+            </nav>
+            <!-- 2H. ADDS A SPACE BETWEEN LOGIN BUTTON AND SIGNUP BUTTON -->
+            <br>
+            <!----------- 2I. USER ACCOUNT SIGN UP BUTTON ----------->
+            <label>Looking for your neighbors? </label>
+            <br>
+            <button onclick="togglePopup()">Create an account</button>
+            <br><br>
+        </div>
+        <!-- 1K. CODE UNDER THIS SECTION FALLS UNDER RIGHT COLUMN -->
+        <div class="column column2">
+            <div class="right_container">
+                <div class="right_columns">
+                    <h2 style="border:black; border-width:1px; border-left:solid; border-top:solid; border-bottom:solid"><br>{{ event_date[0] }}<br><br></h2>
+                    <h2 style="border:black; border-width:1px; border-left:solid; border-top:solid; border-bottom:solid"><br>{{ event_date[1] }}<br><br></h2>
+                    <h2 style="border:black; border-width:1px; border-left:solid; border-top:solid; border-bottom:solid"><br>{{ event_date[2] }}<br><br></h2>
+                    <h2 style="border:black; border-width:1px; border-left:solid; border-top:solid; border-bottom:solid"><br>{{ event_date[3] }}<br><br></h2>
+                    <h2 style="border:black; border-width:1px; border-left:solid; border-top:solid; border-bottom:solid"><br>{{ event_date[4] }}<br><br></h2>
+                </div>
+                <div class="right_columns">
+                    <h2 style="border:black; border-width:1px; border-top:solid; border-bottom:solid"><br>{{ event_name[0] }}<br><br></h2>
+                    <h2 style="border:black; border-width:1px; border-top:solid; border-bottom:solid"><br>{{ event_name[1] }}<br><br></h2>
+                    <h2 style="border:black; border-width:1px; border-top:solid; border-bottom:solid"><br>{{ event_name[2] }}<br><br></h2>
+                    <h2 style="border:black; border-width:1px; border-top:solid; border-bottom:solid"><br>{{ event_name[3] }}<br><br></h2>
+                    <h2 style="border:black; border-width:1px; border-top:solid; border-bottom:solid"><br>{{ event_name[4] }}<br><br></h2>
+                </div>
+                <div class="right_columns">
+                    <h2 style="border:black; border-width:1px; border-right:solid; border-top:solid; border-bottom:solid"><br>{{ event_time[0] }}<br><br></h2>
+                    <h2 style="border:black; border-width:1px; border-right:solid; border-top:solid; border-bottom:solid"><br>{{ event_time[1] }}<br><br></h2>
+                    <h2 style="border:black; border-width:1px; border-right:solid; border-top:solid; border-bottom:solid"><br>{{ event_time[2] }}<br><br></h2>
+                    <h2 style="border:black; border-width:1px; border-right:solid; border-top:solid; border-bottom:solid"><br>{{ event_time[3] }}<br><br></h2>
+                    <h2 style="border:black; border-width:1px; border-right:solid; border-top:solid; border-bottom:solid"><br>{{ event_time[4] }}<br><br></h2>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-------------------------------- 3. SIGN UP POPUP BOX ---------------------------------->
+    <div id="signupPopup" class="popup">
+        <!----------- 3A. CONNECTS TO "X" CLOSE BUTTON ----------->
+        <span class="close_button" onclick="togglePopup()">X</span>
+        <!--------------------------------- 3B. SIGN UP FORM ----------------------------------->
+        <form action="/signup" method="post">
+            <h1>Welcome to the neighborhost!</h1>
+            <!--------------- 3C. USER ENTERS FIRST AND LAST NAME FOR ACCOUNT ---------------->
+            <div>
+                <input type="text" id="first_name" name="first_name" placeholder="First name">
+                <input type="text" id="last_name" name="last_name" placeholder="Last name">
+            </div>
+            <!-- 3D. ADDS A SPACE BETWEEN NAME AND LOCATION -->
+            <br>
+            <!-------------------------- 3E. USER ENTERS CITY AND STATE FOR ACCOUNT --------------------------->
+            <div>
+                <input type="text" id="city" name="city" placeholder="City">
+                <select id="state" name="state">
+                    <option value="State">State</option>
+                    <option value="Alabama">Alabama</option>
+                    <option value="Alaska">Alaska</option>
+                    <option value="American Samoa">American Samoa</option>
+                    <option value="Arizona">Arizona</option>
+                    <option value="Arkansas">Arkansas</option>
+                    <option value="Bureau of Indian Education">Bureau of Indian Education</option>
+                    <option value="California">California</option>
+                    <option value="Colorado">Colorado</option>
+                    <option value="Connecticut">Connecticut</option>
+                    <option value="Delaware">Delaware</option>
+                    <option value="District of Columbia">District of Columbia</option>
+                    <option value="Federated States of Micronesia">Federated States of Micronesia</option>
+                    <option value="Florida">Florida</option>
+                    <option value="Georgia">Georgia</option>
+                    <option value="Guam">Guam</option>
+                    <option value="Hawaii">Hawaii</option>
+                    <option value="Idaho">Idaho</option>
+                    <option value="Illinois">Illinois</option>
+                    <option value="Indiana">Indiana</option>
+                    <option value="Iowa">Iowa</option>
+                    <option value="Kansas">Kansas</option>
+                    <option value="Kentucky">Kentucky</option>
+                    <option value="Louisiana">Louisiana</option>
+                    <option value="Maine">Maine</option>
+                    <option value="Maryland">Maryland</option>
+                    <option value="Massachusetts">Massachusetts</option>
+                    <option value="Michigan">Michigan</option>
+                    <option value="Minnesota">Minnesota</option>
+                    <option value="Mississippi">Mississippi</option>
+                    <option value="Missouri">Missouri</option>
+                    <option value="Montana">Montana</option>
+                    <option value="Nebraska">Nebraska</option>
+                    <option value="Nevada">Nevada</option>
+                    <option value="New Hampshire">New Hampshire</option>
+                    <option value="New Jersey">New Jersey</option>
+                    <option value="New Mexico">New Mexico</option>
+                    <option value="New York">New York</option>
+                    <option value="North Carolina">North Carolina</option>
+                    <option value="North Dakota">North Dakota</option>
+                    <option value="Northern Marianas">Northern Marianas</option>
+                    <option value="Ohio">Ohio</option>
+                    <option value="Oklahoma">Oklahoma</option>
+                    <option value="Oregon">Oregon</option>
+                    <option value="Pennsylvania">Pennsylvania</option>
+                    <option value="Puerto Rico">Puerto Rico</option>
+                    <option value="Republic of Palau">Republic of Palau</option>
+                    <option value="Republic of the Marshall Islands">Republic of the Marshall Islands</option>
+                    <option value="Rhode Island">Rhode Island</option>
+                    <option value="South Carolina">South Carolina</option>
+                    <option value="South Dakota">South Dakota</option>
+                    <option value="Tennessee">Tennessee</option>
+                    <option value="Texas">Texas</option>
+                    <option value="Utah">Utah</option>
+                    <option value="Vermont">Vermont</option>
+                    <option value="Virgin Islands">Virgin Islands</option>
+                    <option value="Virginia">Virginia</option>
+                    <option value="Washington">Washington</option>
+                    <option value="West Virginia">West Virginia</option>
+                    <option value="Wisconsin">Wisconsin</option>
+                    <option value="Wyoming">Wyoming</option>
+                </select>
+            </div>
+            <!-- 3F. ADDS A SPACE BETWEEN LOCATION AND EMAIL -->
+            <br>
+            <!-------------- 3G. USER ENTERS EMAIL FOR ACCOUNT --------------->
+            <div>
+                <input type="text" id="email" name="email" placeholder="Email">
+            </div>
+            <!-- 3H. ADDS A SPACE BETWEEN EMAIL AND PASSWORD -->
+            <br>
+            <!------------------- 3I. USER ENTERS PASSWORD FOR ACCOUNT -------------------->
+            <div>
+                <input type="password" id="password" name="password" placeholder="Password"><!--add show password button and password confirmation-->
+            </div>
+            <!---------------- 3J. USER CHECKS WHETHER THEY WANT TO SKIP ENTERING LOGIN ------------------->
+            <!-- <div>
+                <label>
+                    <input type="checkbox" id="rememberme" name="rememberme">Remember my login information
+                </label>
+            </div> -->
+            <!-- 3K. ADDS A SPACE BETWEEN PASSWORD AND SIGN UP INFO SUBMIT BUTTON -->
+            <br>
+            <!-- 3L. SIGN UP INFO SUBMIT BUTTON -->
+            <input type="submit" value="Sign Up">
+        </form>
+    </div>
+
+    <!------------------------------ 1L. JAVASCRIPT CODE TO ACTIVATE POPUP FUNCTIONALITY --------------------------->
+    <script>
+        function togglePopup() {
+            var popup = document.getElementById('signupPopup');
+            popup.style.display = (popup.style.display === 'none' || popup.style.display === '') ? 'block' : 'none';
+        }
+    </script>
+
+    <!----------------------------- 5. ABOUT NEIGHBORHOST SECTION ------------------------------->
+    <footer>&copy; 2024 neighborhost.com by dataonlock. All rights reserved.</footer> 
+</body>
+</html>

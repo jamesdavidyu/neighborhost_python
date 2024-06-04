@@ -1,0 +1,41 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>neighborhost.com</title>
+        <style>
+            .container {
+            display: flex;
+            justify-content: space-between;
+            }
+            .column {
+                flex: 1;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <div class="column">
+                <form action="/home/" method="POST">{% csrf_token %}
+                    <button type="submit" id="home_click" name="home_click" style="border:none; padding:20px; background-color:white; cursor:pointer">
+                        <img src="{% static 'neighborhost_logo.png' %}" width="200" height="28"/></h2>
+                    </button>
+                </form>
+            </div>
+            <div class="column">
+                <h1>Please enter the code you received from neighborhost in the space provided below.</h1>
+                {% block code_verification_content %}
+                {% endblock %}
+                <form action="/verified/" method="POST">{% csrf_token %}
+                    <input type="text" name="verification_code" id="verification_code" placeholder="Enter your code here.">
+                    <br>
+                    <br>
+                    <input type="submit">
+                </form>
+            </div>
+            <div class="column"></div>
+        </div>
+    </body>
+</html>

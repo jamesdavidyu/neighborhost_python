@@ -1,0 +1,387 @@
+<!------------------------------------------------------------------ 2. MAIN/LOGIN PAGE ---------------------------------------------------------------------->
+
+<!-------------------------------------------------------------------------------------------------------------------------------------------------------------
+1. STYLE SETTING
+    1A. AUTOFITS WEBPAGE TO USERS SCREEN SIZE
+    1B. STYLES POPUP SIGNUP FORM
+    1C. STYLES CLOSE BUTTON ON POPUP SIGNUP FORM
+    1D. CREATES CONTAINER TO ORGANIZE WEBPAGE INTO COLUMNS
+    1E. ORGANIZES WEBPAGE INTO COLUMNS
+    1F. DESIGNATES LEFT COLUMN WITHIN CONTAINER, TAKES UP LEFT QUARTER OF PAGE
+    1G. DESIGNATES RIGHT COLUMN WITHIN CONTAINER, TAKES UP RIGHT THREE QUARTERS OF PAGE
+    1H. CREATES BORDER BETWEEN COLUMNS
+    1I. APPLIES CONTAINER
+    1J. CODE UNDER THIS SECTION FALLS UNDER LEFT COLUMN
+    1K. CODE UNDER THIS SECTION FALLS UNDER RIGHT COLUMN
+    1L. JAVASCRIPT CODE TO ACTIVATE POPUP FUNCTIONALITY
+2. LOGIN SECTION
+    2A. USER ENTERS ACCOUNT EMAIL
+    2B. ADDS A SPACE IN BETWEEN EMAIL AND PASSWORD FIELDS
+    2C. USER ENTERS ACCOUNT PASSWORD
+    2D. USER CHECKS WHETHER THEY WANT TO SKIP ENTERING LOGIN INFO
+    2E. ADDS A SPACE BETWEEN PASSWORD AND SUBMIT BUTTON
+    2F. USER SUBMITS LOGIN INFO
+    2G. LINKS TO PAGE FOR USER TO RESET PASSWORD
+    2H. ADDS A SPACE BETWEEN LOGIN BUTTON AND SIGNUP BUTTON
+    2I. USER ACCOUNT SIGN UP BUTTON
+3. SIGN UP POPUP BOX
+    3A. CONNECTS TO "X" CLOSE BUTTON
+    3B. SIGN UP FORM
+    3C. USER ENTERS FIRST AND LAST NAME FOR ACCOUNT
+    3D. ADDS A SPACE BETWEEN NAME AND EMAIL
+    3E. USER ENTERS CITY AND STATE FOR ACCOUNT - also for security, only people who know BVille can access
+    3F. ADDS A SPACE BETWEEN LOCATION AND EMAIL
+    3G. USER ENTERS EMAIL FOR ACCOUNT
+    3H. ADDS A SPACE BETWEEN EMAIL AND PASSWORD
+    3I. USER ENTERS PASSWORD FOR ACCOUNT
+    3J. USER CHECKS WHETHER THEY WANT TO SKIP ENTERING LOGIN
+    3K. ADDS A SPACE BETWEEN PASSWORD AND SIGN UP INFO SUBMIT BUTTON
+    3L. SIGN UP INFO SUBMIT BUTTON
+4. DASHBOARD SECTION, FALLS UNDER RIGHT COLUMN
+    4a. revolving gallery of public events... calendar, map view...
+5. ABOUT NEIGHBORHOST SECTION
+    5a. about neighborhost (mission, vision, values, people, company, investors, franchising, etc.)
+    5b. careers... 
+---------------------------------------------------------------------------------------------------------------------------------------------------------------->
+
+{% load static %}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <!------------------------------ 1. STYLE SETTING ---------------------------------->
+    
+    <!------------ 1A. AUTOFITS WEBPAGE TO USERS SCREEN SIZE ------------>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>neighborhost.com</title>
+    <style>
+        /* 1B. CREATES POPUP SIGNUP FORM */
+        .popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%,-50%);
+            padding: 20px;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+        }
+        /* 1C. CREATES CLOSE BUTTON ON POPUP SIGNUP FORM */
+        .close_button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            cursor: pointer;
+        }
+        /* 1D. CREATES CONTAINER TO ORGANIZE WEBPAGE INTO COLUMNS */
+        .container {
+            display: flex;
+            overflow: hidden;
+        }
+        /* 1E. ORGANIZES WEBPAGE INTO COLUMNS */
+        .column {
+            padding: 20px;
+            position: relative;
+        }
+        /* 1F. DESIGNATES LEFT COLUMN WITHIN CONTAINER, TAKES UP LEFT QUARTER OF PAGE */
+        .column1 {
+            flex: 0 0 auto;
+            flex-basis: 25%;
+            position: sticky;
+            top: 0;
+            z-index: 1;
+            overflow-y: auto;
+        }
+        /* 1G. DESIGNATES RIGHT COLUMN WITHIN CONTAINER, TAKES UP RIGHT THREE QUARTERS OF PAGE */
+        .column2 {
+            flex: 1;
+            flex-basis: 75%;
+            overflow-y: auto;
+            height: 86vh;
+        }
+        /* 1H. CREATES BORDER BETWEEN COLUMNS */
+        .column1::after{
+            content: "";
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            right: 0;
+            width: 1px;
+            background-color:black;
+        }
+        .right_container {
+            display: flex;
+            justify-content: space-between;
+        }
+        .right_columns {
+            flex: 1;
+        }
+    </style>
+</head>
+<body>
+    <!-- 1I. APPLIES CONTAINER -->
+    <div class="container">
+        <!-- 1J. CODE UNDER THIS SECTION FALLS UNDER LEFT COLUMN -->
+        <div class="column column1">
+            <!---------------------------- 2. LOGIN SECTION ---------------------------------->
+            <form action="/home/" method="POST">{% csrf_token %}
+                <button type="submit" id="home_click" name="home_click" style="border:none; padding:0; background-color:white; cursor:pointer">
+                    <img src="{% static 'neighborhost_logo.png' %}" width="200" height="28"/></h2>
+                </button>
+            </form>
+            {% block index_content %}
+            {% endblock %}
+            <form action="/login/" method="POST">{% csrf_token %}
+                <!---------------- 2A. USER ENTERS ACCOUNT EMAIL ----------------->
+                <div>
+                    <input type="text" id="email" name="email" placeholder="Email">
+                </div>
+                <!-- 2B. ADDS A SPACE IN BETWEEN EMAIL AND PASSWORD FIELDS -->
+                <br>
+                <!--------------------- 2C. USER ENTERS ACCOUNT PASSWORD --------------------->
+                <div>
+                    <input type="password" id="password" name="password" placeholder="Password"><!--add show password button-->
+                </div>
+                <!----- 2D. USER CHECKS WHETHER THEY WANT TO SKIP ENTERING LOGIN INFO ----->
+                <!-- <div>
+                    <label>
+                        <input type="checkbox" id="login_rememberme" name="login_rememberme">Remember me
+                    </label>
+                </div> -->
+                <!-- 2E. ADDS A SPACE BETWEEN PASSWORD AND SUBMIT BUTTON -->
+                <br>
+                <!---- 2F. USER SUBMITS LOGIN INFO ---->
+                <div>
+                    <input type="submit" value="Log In" style="background-color:blue; color:white; cursor:pointer">
+                </div>
+            </form>
+            <!-- 2G. LINKS TO PAGE FOR USER TO RESET PASSWORD -->
+            <nav>
+                <a href="{% static 'forgot_password.html' %}" style="color:red; cursor:pointer">Forgot password?</a>
+            </nav>
+            <!-- 2H. ADDS A SPACE BETWEEN LOGIN BUTTON AND SIGNUP BUTTON -->
+            <br>
+            <!----------- 2I. USER ACCOUNT SIGN UP BUTTON ----------->
+            <label>Looking for your neighbors? </label>
+            <br>
+            <button onclick="togglePopup()" style="background-color:gold; cursor:pointer">Create an account</button>
+            <br><br>
+        </div>
+        <!-- 1K. CODE UNDER THIS SECTION FALLS UNDER RIGHT COLUMN -->
+        <div class="column column2">
+            <label style="font-weight:bold"><big>&#128075 Nice to meet you! Create an account or log in if you'd also like to see events in your neighborhost. Hope to see you soon! &#127960</big></label>
+            <br>
+            <br>
+            {% for column in events_data %}
+            <form action="/view_event_from_signout/" method="POST">{% csrf_token %}
+                <button type="submit" style="width:100%; background-color:white; cursor:pointer" id="event_id" name="event_id" value="{{ column.event_id }}">
+                    <div class="right_container">
+                        <div class="right_columns">    
+                            <h2>{{ column.event_name }}</h2>
+                        </div>
+                        <div class="right_columns">
+                            <h2>{{ column.event_start_date }} to {{ column.event_end_date }}</h2>
+                        </div>
+                        <div class="right_columns">
+                            <h2>{{ column.event_start_time }} to {{ column.event_end_time }}</h2>
+                        </div>
+                    </div>
+                </button>
+            </form>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-------------------------------- 3. SIGN UP POPUP BOX ---------------------------------->
+    <div id="signupPopup" class="popup">
+        <!----------- 3A. CONNECTS TO "X" CLOSE BUTTON ----------->
+        <span class="close_button" onclick="togglePopup()" style="cursor:pointer">X</span>
+        <!--------------------------------- 3B. SIGN UP FORM ----------------------------------->
+        <form action="/signup/" method="POST">{% csrf_token %}
+            <h1>Welcome to the neighborhost!</h1>
+            <label>We need the following information to set up your account:</label>
+            <br>
+            <br>
+            <div>
+                <input type="text" id="email1" name="email" placeholder="Email" required>
+                <span id="email_exists" style="display:none; color:red">Email taken!</span>
+                <span id="email_free" style="display:none; color:green">Email free!</span>
+            </div>
+            <br>
+            <!-------------------------- 3E. USER ENTERS CITY AND STATE FOR ACCOUNT --------------------------->
+            <div>
+                <input type="text" id="username1" name="username" placeholder="Username" required>
+                <span id="username_exists" style="display:none; color:red">Username taken!</span>
+                <span id="username_free" style="display:none; color:green">Username free!</span>
+            </div>
+            <br>
+            <div>
+                <input type="text" id="zipcode" name="zipcode" placeholder="Zipcode" required>
+            </div>
+            <!-- 3F. ADDS A SPACE BETWEEN LOCATION AND EMAIL -->
+            <br>
+            <!------------------- 3I. USER ENTERS PASSWORD FOR ACCOUNT -------------------->
+            <div>
+                <input type="password" id="password1" name="password" placeholder="Password" required><!--add show password button and password confirmation-->
+            </div>
+            <br>
+            <div>
+                <input type="password" id="confirm_password" name="confirm_password" placeholder="Confirm password" required> <!-- need to add functionality that checks password matches above -->
+                <span id="passwords_dont_match" style="display:none; color:red">Passwords don't match!</span>
+                <span id="passwords_match" style="display:none; color:green">Passwords match!</span>
+            </div>
+            <!---------------- 3J. USER CHECKS WHETHER THEY WANT TO SKIP ENTERING LOGIN ------------------->
+            <!-- <div>
+                <label>
+                    <input type="checkbox" id="rememberme" name="rememberme">Remember my login information
+                </label>
+            </div> -->
+            <!-- 3K. ADDS A SPACE BETWEEN PASSWORD AND SIGN UP INFO SUBMIT BUTTON -->
+            <br>
+            <!-- 3L. SIGN UP INFO SUBMIT BUTTON -->
+            <input type="submit" value="Sign Up" style="background-color:black; color:white; cursor:pointer">
+        </form>
+    </div>
+
+    <!------------------------------ 1L. JAVASCRIPT CODE TO ACTIVATE POPUP FUNCTIONALITY --------------------------->
+    <script>
+        function togglePopup() {
+            var popup = document.getElementById('signupPopup');
+            popup.style.display = (popup.style.display === 'none' || popup.style.display === '') ? 'block' : 'none';
+        }
+    </script>
+
+    <script>
+        const emailChoice = document.getElementById('email1');
+        const emailExists = document.getElementById('email_exists');
+        const existingEmails = {{ existing_emails|safe }};
+
+        emailChoice.addEventListener('input', emailTaken);
+
+        function emailTaken() {
+            if (emailChoice.value !== '') {
+                if (existingEmails.includes(emailChoice.value)) {
+                    emailExists.style.display = 'inline';
+                } else {
+                    emailExists.style.display = 'none';
+                }
+            } else {
+                emailExists.style.display = 'none';
+            }
+        }
+    </script>
+
+    <script>
+        const emailChoice2 = document.getElementById('email1');
+        const emailFree = document.getElementById('email_free');
+        const existingUsernames2 = {{ existing_emails|safe }};
+
+        emailChoice2.addEventListener('input', emailCheck);
+
+        function emailCheck() {
+            if (emailChoice2.value !== '') {
+                if (!(existingUsernames2.includes(emailChoice2.value))) {
+                    emailFree.style.display = 'inline';
+                } else {
+                    emailFree.style.display = 'none';
+                }
+            } else {
+                emailFree.style.display = 'none';
+            }
+        }
+    </script>
+
+    <script>
+        const usernameChoice = document.getElementById('username1');
+        const usernameExists = document.getElementById('username_exists');
+        const existingUsernames = {{ existing_usernames|safe }};
+
+        usernameChoice.addEventListener('input', usernameTaken);
+
+        function usernameTaken() {
+            if (usernameChoice.value !== '') {
+                if (existingUsernames.includes(usernameChoice.value)) {
+                    usernameExists.style.display = 'inline';
+                } else {
+                    usernameExists.style.display = 'none';
+                }
+            } else {
+                usernameExists.style.display = 'none';
+            }
+        }
+    </script>
+
+    <script>
+        const usernameChoice2 = document.getElementById('username1');
+        const usernameFree = document.getElementById('username_free');
+        const existingEmails2 = {{ existing_usernames|safe }};
+
+        usernameChoice2.addEventListener('input', usernameCheck);
+
+        function usernameCheck() {
+            if (usernameChoice2.value !== '') {
+                if (!(existingEmails2.includes(usernameChoice2.value))) {
+                    usernameFree.style.display = 'inline';
+                } else {
+                    usernameFree.style.display = 'none';
+                }
+            } else {
+                usernameFree.style.display = 'none';
+            }
+        }
+    </script>
+
+    <script>
+        const passwordMatch = document.getElementById('password1');
+        const confirmPasswordMatch = document.getElementById('confirm_password');
+        const passwordsMatch = document.getElementById('passwords_match');
+        
+        passwordMatch.addEventListener('input', checkMatch);
+        confirmPasswordMatch.addEventListener('input', checkMatch);
+        
+        function checkMatch() {
+            if (passwordMatch.value !== '' && confirmPasswordMatch.value !== '') {
+                if (passwordMatch.value === confirmPasswordMatch.value) {
+                    passwordsMatch.style.display = 'inline';
+                } else {
+                    passwordsMatch.style.display = 'none';
+                }
+            } else {
+                passwordsMatch.style.display = 'none';
+            }
+        }
+    </script>
+
+    <script>
+        const passwordDontMatch = document.getElementById('password1');
+        const confirmPasswordDontMatch = document.getElementById('confirm_password');
+        const passwordsDontMatch = document.getElementById('passwords_dont_match');
+        
+        passwordDontMatch.addEventListener('input', checkDontMatch);
+        confirmPasswordDontMatch.addEventListener('input', checkDontMatch);
+        
+        function checkDontMatch() {
+            if (passwordDontMatch.value !== '' && confirmPasswordDontMatch.value !== '') {
+                if (passwordDontMatch.value !== confirmPasswordDontMatch.value) {
+                    passwordsDontMatch.style.display = 'inline';
+                } else {
+                    passwordsDontMatch.style.display = 'none';
+                }
+            } else {
+                passwordsDontMatch.style.display = 'none';
+            }
+        }
+    </script>
+
+    <!----------------------------- 5. ABOUT NEIGHBORHOST SECTION ------------------------------->
+    <footer style="border:black; border-width:1px; border-top:solid">
+        <br>
+        &copy; 2024 neighborhost.com by dataonlock. All rights reserved.
+        <br>
+        <br>
+    </footer> 
+</body>
+</html>

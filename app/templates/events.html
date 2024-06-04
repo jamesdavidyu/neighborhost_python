@@ -1,0 +1,80 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>neighborhost.com</title>
+        <style>
+            .container {
+                display: flex;
+                justify-content: space-between;
+            }
+            .column {
+                flex: 1;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <div class="column">
+                <form action="/home/" method="POST">{% csrf_token %}
+                    <button type="submit" id="home_click" name="home_click" style="border:none; padding:20px; background-color:white; cursor:pointer">
+                        <img src="{% static 'neighborhost_logo.png' %}" width="200" height="28"/></h2>
+                    </button>
+                </form>
+            </div>
+            <div class="column">
+                <div>
+                    {% if event_exists != None %}
+                    <br>
+                    <form action="/recreate_event/" method="POST">{% csrf_token %}
+                        <label style="color:blue">It looks like an event like this already exists. Are you sure you want to create?</label>
+                        <br>
+                        <select id="event_recreate" name="event_recreate">
+                            <option value="Yes">Yes</option>
+                            <option value="No">No</option>
+                        </select>
+                        <input type="submit" style="cursor:pointer">
+                    </form>
+                    {% endif %}
+                    <h1>{{ event_name }}</h1>
+                    <form action="/friend_profile/" method="POST" style="font-weight:normal; font-size:x-large; font-family:'Times New Roman', Times, serif">{% csrf_token %}
+                        by<button type="submit" id="friend_id" name="friend_id" value="{{ event_planner_id }}" style="background:none; border:none; cursor:pointer; font-size:x-large; font-family: 'Times New Roman', Times, serif"><u>{{ event_planner_name }}</u></button>
+                    </form>
+                    <br>
+                    {% if event_viewer_is_event_planner == True %}
+                    <form>
+                        <input type="button" value="Edit event" style="cursor:pointer">
+                    </form>
+                    <br>
+                    {% endif %}
+                </div>
+                <div class="container" style="border:black; border-width:1px; border-top:solid">
+                    <div class="column" style="border:black; border-width:1px; border-right:solid; padding-left:10px">
+                        <h3>Start</h3>
+                        <h2>{{ event_start_date }}<br>at {{ event_start_time }}</h2>
+                    </div>
+                    <div class = "column" style="padding-left:20px">
+                        <h3>End</h3>
+                        <h2>{{ event_end_date }}<br>at {{ event_end_time }}</h2>
+                    </div>
+                </div>
+                <div style="border:black; border-width:1px; border-top:solid">
+                    <h2>{{ event_description|safe }}</h2>
+                </div>
+                <div style="border:black; border-width:1px; border-top:solid">
+                    <br>
+                    <label>Address</label>
+                    <br>
+                    <label style="border:black; border-width:1px; border-top:solid">{{ event_address }}</label>
+                    <br>
+                    <label>{{ event_city }}, {{ event_state }} {{ event_zipcode }}</label>
+                </div>
+            </div>
+            <div class="column"></div>
+        </div>
+        <br>
+        <footer style="border:black; border-width:1px; border-top:solid"><br>&copy; 2024 neighborhost.com by dataonlock. All rights reserved.</footer> 
+    </body>
+</html>

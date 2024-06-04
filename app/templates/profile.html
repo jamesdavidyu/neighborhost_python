@@ -1,0 +1,134 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>{% if profile_id in neighbor_friends_list %}{{ profile_name }}{% else %}{{ profile_username }}{% endif %}</title>
+        <style>
+            .container {
+                display: flex;
+                justify-content: space-between;
+            }
+            .column {
+                flex: 1;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <div class="column">
+                <form action="/home/" method="POST">{% csrf_token %}
+                    <button type="submit" id="home_click" name="home_click" style="border:none; padding:20px; background-color:white; cursor:pointer">
+                        <img src="{% static 'neighborhost_logo.png' %}" width="200" height="28"/></h2>
+                    </button>
+                </form>
+            </div>
+            <div class="column">
+                {% if profile_picture != 'none' %}
+                <br>
+                <img src="{% static '/' %}{{ profile_picture }}" width="200" height="200"/>
+                {% else %}{% endif %}
+                <h1>
+                    {% if profile_id in neighbor_friends_list %}
+                    {{ profile_name }} ({{ profile_username }})
+                    {% else %}
+                    {{ profile_username }}
+                    {% endif %}
+                </h1>
+                {% if profile_id == neighbor_id %}
+                <form>{% csrf_token %}
+                    <input type="submit" value="Edit Profile" style="cursor:pointer">
+                </form>
+                {% elif profile_id in friend_request_list %}
+                {% block profile_content %}
+                {% endblock %}
+                {% elif profile_id not in neighbor_friends_list %}
+                <form action="/friend_request/" method="POST">{% csrf_token %}
+                    <button type="submit" id="friend_id" name="friend_id" value="{{ profile_id }}" style="cursor:pointer">Add Friend</button>
+                </form>
+                {% else %}
+                {% endif %}
+                <br>
+                {% if profile_id in neighbor_friends_list %}
+                {% for column in friend_events_data %}
+                    {% if column.zipcode_match == True %}
+                    <form action="/view_event_from_login/" method="POST">{% csrf_token %}
+                        <button type="submit" style="width:100%; background-color: white; cursor:pointer" id="event_id" name="event_id" value="{{ column.event_id }}">
+                            <div class="container">
+                                <label style="color:blue; font-weight:normal">N</label>
+                                <div class="column">
+                                    <h2>{{ column.event_name }}</h2>
+                                </div>
+                                <div class="column">
+                                    <h2>{{ column.event_start_date }} to {{ column.event_end_date }}</h2>
+                                </div>
+                                <div class="column">
+                                    <h2>{{ column.event_start_time }} to {{ column.event_end_time }}</h2>
+                                </div>
+                            </div>
+                        </button>
+                    </form>
+                    {% else %}
+                    <form action="/view_event_from_login/" method="POST">{% csrf_token %}
+                        <button type="submit" style="width:100%; background-color:white; cursor:pointer" id="event_id" name="event_id" value="{{ column.event_id }}">
+                            <div class="container">
+                                <label style="color:gold; font-weight:normal">A</label>
+                                <div class="column">    
+                                    <h2>{{ column.event_name }}</h2>
+                                </div>
+                                <div class="column">
+                                    <h2>{{ column.event_start_date }} to {{ column.event_end_date }}</h2>
+                                </div>
+                                <div class="column">
+                                    <h2>{{ column.event_start_time }} to {{ column.event_end_time }}</h2>
+                                </div>
+                            </div>
+                        </button>
+                    </form>
+                    {% endif %}
+                {% endfor %}
+                {% else %}
+                {% for column in stranger_events_data %}
+                    {% if column.zipcode_match == True %}
+                    <form action="/view_event_from_login/" method="POST">{% csrf_token %}
+                        <button type="submit" style="width:100%; background-color: white; cursor:pointer" id="event_id" name="event_id" value="{{ column.event_id }}">
+                            <div class="container">
+                                <label style="color:blue; font-weight:normal">N</label>
+                                <div class="column">
+                                    <h2>{{ column.event_name }}</h2>
+                                </div>
+                                <div class="column">
+                                    <h2>{{ column.event_start_date }} to {{ column.event_end_date }}</h2>
+                                </div>
+                                <div class="column">
+                                    <h2>{{ column.event_start_time }} to {{ column.event_end_time }}</h2>
+                                </div>
+                            </div>
+                        </button>
+                    </form>
+                    {% else %}
+                    <form action="/view_event_from_login/" method="POST">{% csrf_token %}
+                        <button type="submit" style="width:100%; background-color:white; cursor:pointer" id="event_id" name="event_id" value="{{ column.event_id }}">
+                            <div class="container">
+                                <label style="color:gold; font-weight:normal">A</label>
+                                <div class="column">    
+                                    <h2>{{ column.event_name }}</h2>
+                                </div>
+                                <div class="column">
+                                    <h2>{{ column.event_start_date }} to {{ column.event_end_date }}</h2>
+                                </div>
+                                <div class="column">
+                                    <h2>{{ column.event_start_time }} to {{ column.event_end_time }}</h2>
+                                </div>
+                            </div>
+                        </button>
+                    </form>
+                    {% endif %}
+                {% endfor %}
+                {% endif %}
+            </div>
+            <div class="column"></div>
+        </div>
+    </body>
+</html>

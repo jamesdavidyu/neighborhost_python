@@ -119,6 +119,10 @@
         .right_columns {
             flex: 1;
         }
+        .round_button {
+            border-radius: 4px;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
@@ -137,13 +141,13 @@
             <form action="/login/" method="POST">{% csrf_token %}
                 <!---------------- 2A. USER ENTERS ACCOUNT EMAIL ----------------->
                 <div>
-                    <input type="text" id="email" name="email" placeholder="Email">
+                    <input type="text" id="email" name="email" placeholder="Email" style="width:90.25%; height: 29.5px; font-family:Arial, Helvetica, sans-serif; font-size:15.92px">
                 </div>
                 <!-- 2B. ADDS A SPACE IN BETWEEN EMAIL AND PASSWORD FIELDS -->
                 <br>
                 <!--------------------- 2C. USER ENTERS ACCOUNT PASSWORD --------------------->
                 <div>
-                    <input type="password" id="password" name="password" placeholder="Password"><!--add show password button-->
+                    <input type="password" id="password" name="password" placeholder="Password" style="width:90.25%; height: 29.5px; font-family:Arial, Helvetica, sans-serif; font-size:15.92px"><!--add show password button-->
                 </div>
                 <!----- 2D. USER CHECKS WHETHER THEY WANT TO SKIP ENTERING LOGIN INFO ----->
                 <!-- <div>
@@ -155,19 +159,19 @@
                 <br>
                 <!---- 2F. USER SUBMITS LOGIN INFO ---->
                 <div>
-                    <input type="submit" value="Log In" style="background-color:blue; color:white; cursor:pointer">
+                    <input type="submit" value="Log In" class="round_button" style="height:30px; width:90.25%; background-color:blue; color:white; cursor:pointer; font-family:Arial, Helvetica, sans-serif; font-weight:bold; border:none">
                 </div>
             </form>
             <!-- 2G. LINKS TO PAGE FOR USER TO RESET PASSWORD -->
             <nav>
-                <a href="{% static 'forgot_password.html' %}" style="color:red; cursor:pointer">Forgot password?</a>
+                <a href="{% static 'forgot_password.html' %}" style="color:red; cursor:pointer; font-family:Arial, Helvetica, sans-serif">Forgot password?</a>
             </nav>
             <!-- 2H. ADDS A SPACE BETWEEN LOGIN BUTTON AND SIGNUP BUTTON -->
             <br>
             <!----------- 2I. USER ACCOUNT SIGN UP BUTTON ----------->
-            <label>Looking for your neighbors? </label>
+            <label style="font-family:Arial, Helvetica, sans-serif">Looking for your neighbors?</label>
             <br>
-            <button onclick="togglePopup()" style="background-color:gold; cursor:pointer">Create an account</button>
+            <button onclick="togglePopup()" class="round_button" style="background-color:gold; cursor:pointer; border:none">Create an account</button>
             <br><br>
         </div>
         <!-- 1K. CODE UNDER THIS SECTION FALLS UNDER RIGHT COLUMN -->
@@ -206,14 +210,14 @@
             <br>
             <br>
             <div>
-                <input type="text" id="email1" name="email" placeholder="Email" required>
+                <input type="text" id="email1" name="email" placeholder="Email" style="width:60%" required>
                 <span id="email_exists" style="display:none; color:red">Email taken!</span>
                 <span id="email_free" style="display:none; color:green">Email free!</span>
             </div>
             <br>
             <!-------------------------- 3E. USER ENTERS CITY AND STATE FOR ACCOUNT --------------------------->
             <div>
-                <input type="text" id="username1" name="username" placeholder="Username" required>
+                <input type="text" id="username1" name="username" placeholder="Username" style="width:60%" required>
                 <span id="username_exists" style="display:none; color:red">Username taken!</span>
                 <span id="username_free" style="display:none; color:green">Username free!</span>
             </div>
@@ -225,11 +229,11 @@
             <br>
             <!------------------- 3I. USER ENTERS PASSWORD FOR ACCOUNT -------------------->
             <div>
-                <input type="password" id="password1" name="password" placeholder="Password" required><!--add show password button and password confirmation-->
+                <input type="password" id="password1" name="password" placeholder="Password" style="width:60%" required><!--add show password button and password confirmation-->
             </div>
             <br>
             <div>
-                <input type="password" id="confirm_password" name="confirm_password" placeholder="Confirm password" required> <!-- need to add functionality that checks password matches above -->
+                <input type="password" id="confirm_password" name="confirm_password" placeholder="Confirm password" style="width:60%" required> <!-- need to add functionality that checks password matches above -->
                 <span id="passwords_dont_match" style="display:none; color:red">Passwords don't match!</span>
                 <span id="passwords_match" style="display:none; color:green">Passwords match!</span>
             </div>

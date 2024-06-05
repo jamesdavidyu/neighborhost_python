@@ -38,9 +38,9 @@
                         <input type="submit" style="cursor:pointer">
                     </form>
                     {% endif %}
-                    <h1>{{ event_name }}</h1>
-                    <form action="/friend_profile/" method="POST" style="font-weight:normal; font-size:x-large; font-family:'Times New Roman', Times, serif">{% csrf_token %}
-                        by<button type="submit" id="friend_id" name="friend_id" value="{{ event_planner_id }}" style="background:none; border:none; cursor:pointer; font-size:x-large; font-family: 'Times New Roman', Times, serif"><u>{{ event_planner_name }}</u></button>
+                    <h1 style="font-family:Arial, Helvetica, sans-serif">{{ event_name }}</h1>
+                    <form action="/friend_profile/" method="POST" style="font-weight:normal; font-size:x-large; font-family:Arial, Helvetica, sans-serif">{% csrf_token %}
+                        by<button type="submit" id="friend_id" name="friend_id" value="{{ event_planner_id }}" style="background:none; border:none; cursor:pointer; font-size:x-large; font-family:Arial, Helvetica, sans-serif"><u>{{ event_planner_name }}</u></button>
                     </form>
                     <br>
                     {% if event_viewer_is_event_planner == True %}
@@ -52,29 +52,29 @@
                 </div>
                 <div class="container" style="border:black; border-width:1px; border-top:solid">
                     <div class="column" style="border:black; border-width:1px; border-right:solid; padding-left:10px">
-                        <h3>Start</h3>
-                        <h2>{{ event_start_date }}<br>at {{ event_start_time }}</h2>
+                        <h3 style="font-family:Arial, Helvetica, sans-serif">Start</h3>
+                        <h2 style="font-family:Arial, Helvetica, sans-serif">{{ event_start_date }}<br>at {{ event_start_time }}</h2>
                     </div>
                     <div class = "column" style="padding-left:20px">
-                        <h3>End</h3>
-                        <h2>{{ event_end_date }}<br>at {{ event_end_time }}</h2>
+                        <h3 style="font-family:Arial, Helvetica, sans-serif">End</h3>
+                        <h2 style="font-family:Arial, Helvetica, sans-serif">{{ event_end_date }}<br>at {{ event_end_time }}</h2>
                     </div>
                 </div>
                 <div style="border:black; border-width:1px; border-top:solid">
-                    <h2>{{ event_description|safe }}</h2>
+                    <h2 style="font-family:Arial, Helvetica, sans-serif">{{ event_description|safe }}</h2>
                 </div>
                 <div style="border:black; border-width:1px; border-top:solid">
                     <br>
-                    <label>Address</label>
+                    <label style="font-family:Arial, Helvetica, sans-serif">Address</label>
                     <br>
-                    <label style="border:black; border-width:1px; border-top:solid">{{ event_address }}</label>
+                    <label style="border:black; border-width:1px; border-top:solid; font-family:Arial, Helvetica, sans-serif">{{ event_address }}</label>
                     <br>
-                    <label>{{ event_city }}, {{ event_state }} {{ event_zipcode }}</label>
+                    <label style="font-family:Arial, Helvetica, sans-serif">{{ event_city }}, {{ event_state }} {{ event_zipcode }}</label>
                 </div>
             </div>
             <div class="column"></div>
         </div>
         <br>
-        <footer style="border:black; border-width:1px; border-top:solid"><br>&copy; 2024 neighborhost.com by dataonlock. All rights reserved.</footer> 
+        <footer style="border:black; border-width:1px; border-top:solid; font-family:Arial, Helvetica, sans-serif"><br>&copy; 2024 neighborhost.com by dataonlock. All rights reserved.</footer> 
     </body>
 </html>

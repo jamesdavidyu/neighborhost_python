@@ -132,7 +132,7 @@
                         <img src="{% static 'neighborhost_logo.png' %}" width="200" height="28"/></h2>
                     </button>
                 </form>
-                <h1>
+                <h1 style="font-family:Arial, Helvetica, sans-serif">
                     Howdy, {% if neighbor_name == None %}{{ neighbor_username }}{% else %}{{ neighbor_name }}{% endif %}!
                     {% if verified == True %}
                     <span>&#10003;</span> <!-- checkmark -->
@@ -171,63 +171,63 @@
                     <label style="color:red">Browse through events to add friends!</label>
                     {% endif %}
                     <form action="/friends_check/" method="POST">{% csrf_token %}
-                        <input type="submit" value="Friends" style="background-color: blue; color:white" class="round_button">
+                        <input type="submit" value="Friends" style="background-color:blue; color:white; font-family:Arial, Helvetica, sans-serif; font-weight:bold" class="round_button">
                     </form>
                 </div>
                 <br>
                 <!-- 2C-?. ? -->
                 <!-- 2?. PLAN AN EVENT BUTTON OPENS POPUP BOX FOR USER TO CREATE/ENTER EVENT DETAILS -->
                 <div>
-                    <button onclick="togglePopup()" style="background-color: red; color:white" class="round_button">Plan an Event</button>
+                    <button onclick="togglePopup()" style="background-color: red; color:white; font-family:Arial, Helvetica, sans-serif; font-weight:bold" class="round_button">Plan an Event</button>
                 </div>
 
                 <h3>
                     <form>
-                        <input type="submit" value="View Your Profile" style="background-color:gold" class="round_button">
+                        <input type="submit" value="View Your Profile" style="background-color:gold; font-family:Arial, Helvetica, sans-serif; font-weight:bold" class="round_button">
                     </form>
                 </h3>
 
                 <form action="/signout/" method="POST">{% csrf_token %}
-                    <input type="submit" value="Sign Out" style="background-color: black; color:white" class="round_button">
+                    <input type="submit" value="Sign Out" style="background-color: black; color:white; font-family:Arial, Helvetica, sans-serif; font-weight:bold" class="round_button">
                 </form>
             </div>
             <!-- 3. PLAN AN EVENT POPUP BOX -->
             <div id="signupPopup" class="popup">
                 <!-- 3A. CONNECTS TO "X" CLOSE BUTTON -->
-                <span class="close_button" onclick="togglePopup()" class="round_button">X</span>
+                <span class="close_button" onclick="togglePopup()" class="round_button" style="font-family:Arial, Helvetica, sans-serif; font-weight:bold">X</span>
                 <!-- 3B. PLAN AN EVENT FORM -->
                 {% if verified == False %}
-                <h1>Verify your account if you'd like to host an event!</h1>
+                <h1 style="font-family:Arial, Helvetica, sans-serif">Verify your account if you'd like to host an event!</h1>
                 {% else %}
                 <form action="/plan_event/" method="POST">{% csrf_token %}
-                    <h1>What are you neighborhosting?</h1>
+                    <h1 style="font-family:Arial, Helvetica, sans-serif">What are you neighborhosting?</h1>
                     
                     <div>
-                        <label>Describe your event: what's your favorite thing to do with people?</label>
+                        <label style="font-family:Helvetica">Describe your event: what's your favorite thing to do with people?</label>
                         <br>
-                        <input type="text" id="event_description" name="event_description" placeholder="e.g., We will be learning how to cook pho broth!">
+                        <textarea id="event_description" name="event_description" placeholder="e.g., We will be learning how to cook pho broth!" style="width:100%; font-family:Arial, Helvetica, sans-serif"></textarea>
                     </div>
         
                     <br>
                     
                     <div>
-                        <label>Event Name</label>
+                        <label style="font-family:Arial, Helvetica, sans-serif">Event Name</label>
                         <br>
-                        <input type="text" id="event_name" name="event_name" placeholder="Cooking class, Concert, etc."> <!--would be cool to have a placeholder that changes every couple of seconds-->
+                        <input type="text" id="event_name" name="event_name" placeholder="Cooking class, Concert, etc." style="width:100%; font-family:Arial, Helvetica, sans-serif"> <!--would be cool to have a placeholder that changes every couple of seconds-->
                     </div>
                     
                     <br>
 
                     <div class="container">
                         <div class="column_popup">
-                            <label>Start date</label>
+                            <label style="font-family:Arial, Helvetica, sans-serif">Start date</label>
                             <br>
-                            <input type="date" id="event_start_date" name="event_start_date">
+                            <input type="date" id="event_start_date" name="event_start_date" style="font-family:Arial, Helvetica, sans-serif">
                         </div>
                         <div class="column_popup">
-                            <label>End date</label>
+                            <label style="font-family:Arial, Helvetica, sans-serif">End date</label>
                             <br>
-                            <input type="date" id="event_end_date" name="event_end_date">
+                            <input type="date" id="event_end_date" name="event_end_date" style="font-family:Arial, Helvetica, sans-serif">
                         </div>
                     </div>
 
@@ -236,24 +236,24 @@
                     <div class="container">
                         <div class="column_popup">
                             <div>
-                                <label>Start time</label>
+                                <label style="font-family:Arial, Helvetica, sans-serif">Start time</label>
                                 <br>
-                                <input type="time" id="event_start_time" name="event_start_time">
+                                <input type="time" id="event_start_time" name="event_start_time" style="font-family:Arial, Helvetica, sans-serif">
                             </div>
                         </div>
                         <div class="column_popup">
-                            <label>End time</label>
+                            <label style="font-family:Arial, Helvetica, sans-serif">End time</label>
                             <br>
-                            <input type="time" id="event_end_time" name="event_end_time">
+                            <input type="time" id="event_end_time" name="event_end_time" style="font-family:Arial, Helvetica, sans-serif">
                         </div>
                     </div>
 
                     <br>
 
                     <div>
-                        <label>Does this event reoccur?</label>
+                        <label style="font-family:Arial, Helvetica, sans-serif">Does this event reoccur?</label>
                         <br>
-                        <select id="event_reoccur" name="event_reoccur">
+                        <select id="event_reoccur" name="event_reoccur" style="font-family:Arial, Helvetica, sans-serif">
                             <option value="No">No</option>
                             <option value="Weekly">Weekly</option>
                             <option value="Bi-weekly">Bi-weekly</option>
@@ -267,16 +267,16 @@
                     <br>
 
                     <div>
-                        <label>Address</label>
+                        <label style="font-family:Arial, Helvetica, sans-serif">Address</label>
                         <br>
-                        <input type="text" id="event_address" name="event_address" placeholder="123 Main St">
+                        <input type="text" id="event_address" name="event_address" placeholder="123 Main St" style="width:100%; font-family:Arial, Helvetica, sans-serif">
                     </div>
 
                     <br>
 
                     <div>
-                        <input type="text" id="event_city" name="event_city" placeholder="City">
-                        <select id="event_state" name="event_state">
+                        <input type="text" id="event_city" name="event_city" placeholder="City" style="font-family:Arial, Helvetica, sans-serif;">
+                        <select id="event_state" name="event_state" style="font-family:Arial, Helvetica, sans-serif">
                             <option value="State">State</option>
                             <option value="Alabama">Alabama</option>
                             <option value="Alaska">Alaska</option>
@@ -339,18 +339,18 @@
                             <option value="Wisconsin">Wisconsin</option>
                             <option value="Wyoming">Wyoming</option>
                         </select>
-                        <input type="text" id="event_zipcode" name="event_zipcode" placeholder="Zipcode">
+                        <input type="text" id="event_zipcode" name="event_zipcode" placeholder="Zipcode" style="font-family:Arial, Helvetica, sans-serif">
                     </div>
 
                     <br>
 
                     <div>
-                        <label>Would you like to take this event public?</label><input type="checkbox" id="event_public" name="event_public">
+                        <label style="font-family:Arial, Helvetica, sans-serif">Would you like to take this event public?</label><input type="checkbox" id="event_public" name="event_public">
                     </div>
 
                     <br>
 
-                    <input type="submit" value="Plan!" style="background-color:blue; color:white; cursor:pointer">
+                    <input type="submit" value="Plan!" style="background-color:blue; color:white; cursor:pointer; font-family:Arial, Helvetica, sans-serif; font-weight:bold">
                     
                     <br>
                     <br>
@@ -490,7 +490,7 @@
                     {% for column in events_data %}
                         {% if column.neighborhood_match == True %}
                         <form action="/view_event_from_login/" method="POST">{% csrf_token %}
-                            <button type="submit" style="width:100%; background-color: white" class="round_button" id="event_id" name="event_id" value="{{ column.event_id }}">
+                            <button type="submit" style="width:100%; background-color:white; font-family:Arial, Helvetica, sans-serif" class="round_button" id="event_id" name="event_id" value="{{ column.event_id }}">
                                 <div class="right_container">
                                     <label style="color:red; font-weight:normal">N</label>
                                     <div class="right_columns">
@@ -507,7 +507,7 @@
                         </form>
                         {% elif column.zipcode_match == True %}
                         <form action="/view_event_from_login/" method="POST">{% csrf_token %}
-                            <button type="submit" style="width:100%; background-color: white" class="round_button" id="event_id" name="event_id" value="{{ column.event_id }}">
+                            <button type="submit" style="width:100%; background-color:white; font-family:Arial, Helvetica, sans-serif" class="round_button" id="event_id" name="event_id" value="{{ column.event_id }}">
                                 <div class="right_container">
                                     <label style="color:blue; font-weight:normal">Z</label>
                                     <div class="right_columns">
@@ -524,7 +524,7 @@
                         </form>
                         {% elif column.city_match == True %}
                         <form action="/view_event_from_login/" method="POST">{% csrf_token %}
-                            <button type="submit" style="width:100%; background-color: white" class="round_button" id="event_id" name="event_id" value="{{ column.event_id }}">
+                            <button type="submit" style="width:100%; background-color:white; font-family:Arial, Helvetica, sans-serif" class="round_button" id="event_id" name="event_id" value="{{ column.event_id }}">
                                 <div class="right_container">
                                     <label style="color:black; font-weight:normal">C</label>
                                     <div class="right_columns">
@@ -541,7 +541,7 @@
                         </form>
                         {% else %}
                         <form action="/view_event_from_login/" method="POST">{% csrf_token %}
-                            <button type="submit" style="width:100%; background-color:white" class="round_button" id="event_id" name="event_id" value="{{ column.event_id }}">
+                            <button type="submit" style="width:100%; background-color:white; font-family:Arial, Helvetica, sans-serif" class="round_button" id="event_id" name="event_id" value="{{ column.event_id }}">
                                 <div class="right_container">
                                     <label style="color:gold; font-weight:normal">A</label>
                                     <div class="right_columns">    
@@ -562,7 +562,7 @@
                 </div>
             </div>
         </div>
-        <footer style="border:black; border-width:1px; border-top:solid">
+        <footer style="border:black; border-width:1px; border-top:solid; font-family: Arial, Helvetica, sans-serif;">
             <br>
             &copy; 2024 neighborhost.com by dataonlock. All rights reserved.
             <br>
